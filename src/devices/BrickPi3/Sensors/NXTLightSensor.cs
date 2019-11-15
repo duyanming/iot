@@ -43,12 +43,14 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize a NXT Light Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         public NXTLightSensor(Brick brick, SensorPort port) : this(brick, port, LightMode.Relection, 1000) { }
 
         /// <summary>
         /// Initialize a NXT Light Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Light mode</param>
         public NXTLightSensor(Brick brick, SensorPort port, LightMode mode) : this(brick, port, mode, 1000) { }
@@ -56,6 +58,7 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize a NXT Light Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Light mode</param>
         /// <param name="timeout">Period in millisecond to check sensor value changes</param>
@@ -153,6 +156,9 @@ namespace Iot.Device.BrickPi3.Sensors
         /// </summary>
         public int CutOff { get; set; }
 
+        /// <summary>
+        /// Light mode
+        /// </summary>
         public LightMode LightMode
         {
             get
@@ -170,28 +176,49 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Sensor port
+        /// </summary>
         public SensorPort Port { get; }
 
+        /// <summary>
+        /// Moves to next mode
+        /// </summary>
         public void SelectNextMode()
         {
             LightMode = LightMode.Next();
         }
 
+        /// <summary>
+        /// Moves to previous mode
+        /// </summary>
         public void SelectPreviousMode()
         {
             LightMode = LightMode.Previous();
         }
 
+        /// <summary>
+        /// Number of modes
+        /// </summary>
+        /// <returns>Number of modes</returns>
         public int NumberOfModes()
         {
             return Enum.GetNames(typeof(LightMode)).Length;
         }
 
+        /// <summary>
+        /// Selected mode
+        /// </summary>
+        /// <returns>String representing selected mode</returns>
         public string SelectedMode()
         {
             return LightMode.ToString();
         }
 
+        /// <summary>
+        /// Reads raw data from the sensor
+        /// </summary>
+        /// <returns>Integer value read from the light sensor</returns>
         public int ReadRaw()
         {
             try
@@ -205,11 +232,19 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Reads data from the sensor and coverts it to string
+        /// </summary>
+        /// <returns>String value representing the reading</returns>
         public string ReadAsString()
         {
             return (ReadRaw() > CutOff) ? "Dark" : "Clear";
         }
 
+        /// <summary>
+        /// Gets sensor name
+        /// </summary>
+        /// <returns>Sensor name</returns>
         public string GetSensorName()
         {
             return "NXT Light";

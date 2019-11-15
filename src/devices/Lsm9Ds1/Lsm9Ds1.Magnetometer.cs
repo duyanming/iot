@@ -3,17 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.IO;
-using System.Device.Gpio;
-using System.Device.I2c;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Device.I2c.Drivers;
 using System.Buffers.Binary;
+using System.Device.I2c;
 using System.Numerics;
 
 namespace Iot.Device.Lsm9Ds1
 {
+    /// <summary>
+    /// LSM9DS1 magnetometer
+    /// </summary>
     public class Lsm9Ds1Magnetometer : IDisposable
     {
         private const byte ReadMask = 0x80;
@@ -116,6 +114,7 @@ namespace Iot.Device.Lsm9Ds1
             }
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             _i2c?.Dispose();

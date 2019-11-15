@@ -14,12 +14,15 @@
     <Compile Include="LcdInterface.cs" />
     <Compile Include="LcdInterface.Gpio.cs" />
     <Compile Include="LcdInterface.I2c.cs" />
-    <Compile Include="LcdRgb1602.cs" />
+    <Compile Include="LcdInterface.I2c4Bit.cs" />
+    <Compile Include="LcdRgb.cs" />
     <Compile Include="Registers.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Device.Gpio" Version="$(SystemDeviceGpioPackageVersion)" />
+    <ProjectReference Include="$(MainLibraryPath)System.Device.Gpio.csproj">
+      <AdditionalProperties>$(AdditionalProperties);RuntimeIdentifier=linux</AdditionalProperties>
+    </ProjectReference>
     <None Include="README.md" />
   </ItemGroup>
 

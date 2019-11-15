@@ -5,5 +5,8 @@
     <NoWarn>$(NoWarn);CS8321</NoWarn>
     <DeterministicSourcePaths>false</DeterministicSourcePaths>
     <IsPackable>false</IsPackable>
+    <MainLibraryPath>$(MSBuildThisFileDirectory)../System.Device.Gpio/</MainLibraryPath>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 </Project>

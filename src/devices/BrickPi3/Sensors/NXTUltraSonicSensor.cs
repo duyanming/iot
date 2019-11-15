@@ -47,12 +47,14 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize a NXT Ultrasonic sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         public NXTUltraSonicSensor(Brick brick, SensorPort port) : this(brick, port, UltraSonicMode.Centimeter, 1000) { }
 
         /// <summary>
         /// Initialize a NXT Ultrasonic sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Ultrasonic mode</param>
         public NXTUltraSonicSensor(Brick brick, SensorPort port, UltraSonicMode mode) : this(brick, port, mode, 1000) { }
@@ -60,6 +62,7 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize a NXT Ultrasonic sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Ultrasonic mode</param>
         /// <param name="timeout">Period in millisecond to check sensor value changes</param>
@@ -109,6 +112,9 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Gets sensor port
+        /// </summary>
         public SensorPort Port { get; }
 
         /// <summary>
@@ -164,11 +170,19 @@ namespace Iot.Device.BrickPi3.Sensors
         /// </value>
         public UltraSonicMode Mode { get; set; }
 
+        /// <summary>
+        /// Gets sensor name
+        /// </summary>
+        /// <returns>Sensor name</returns>
         public string GetSensorName()
         {
             return "NXT Ultrasonic";
         }
 
+        /// <summary>
+        /// Reads distance as string
+        /// </summary>
+        /// <returns>String representing distance with units</returns>
         public string ReadAsString()
         {
             return (Mode == UltraSonicMode.Inch) ? ReadDistance().ToString() + " inch" : ReadDistance().ToString() + " cm";
@@ -202,6 +216,9 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Moves to next mode
+        /// </summary>
         public void SelectNextMode()
         {
             Mode = Mode.Next();
@@ -209,6 +226,9 @@ namespace Iot.Device.BrickPi3.Sensors
                 Mode = Mode.Next();
         }
 
+        /// <summary>
+        /// Moves to previous mode
+        /// </summary>
         public void SelectPreviousMode()
         {
             Mode = Mode.Previous();
@@ -216,12 +236,20 @@ namespace Iot.Device.BrickPi3.Sensors
                 Mode = Mode.Previous();
         }
 
+        /// <summary>
+        /// Number of modes
+        /// </summary>
+        /// <returns>Number of modes</returns>
         public int NumberOfModes()
         {
             // listen mode not supported so 1 less mode
             return Enum.GetNames(typeof(UltraSonicMode)).Length - 1;
         }
 
+        /// <summary>
+        /// Selected mode
+        /// </summary>
+        /// <returns>String representing selected mode</returns>
         public string SelectedMode()
         {
             return Mode.ToString();

@@ -27,12 +27,14 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize a NXT Sound Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor Port</param>
         public NXTSoundSensor(Brick brick, SensorPort port) : this(brick, port, 1000) { }
 
         /// <summary>
         /// Initialize a NXT Sound Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="timeout">Period in millisecond to check sensor value changes</param>
         public NXTSoundSensor(Brick brick, SensorPort port, int timeout)
@@ -165,23 +167,41 @@ namespace Iot.Device.BrickPi3.Sensors
         /// </summary>
         public SensorPort Port { get; }
 
+        /// <summary>
+        /// Gets sensor name
+        /// </summary>
+        /// <returns>Sensor name</returns>
         public string GetSensorName()
         {
             return "NXT Sound";
         }
 
+        /// <summary>
+        /// Number of modes
+        /// </summary>
+        /// <returns>Number of modes</returns>
         public int NumberOfModes()
         {
             return 1;
         }
 
+        /// <summary>
+        /// Selected mode
+        /// </summary>
+        /// <returns>String representing selected mode</returns>
         public string SelectedMode()
         {
             return "Analog";
         }
 
+        /// <summary>
+        /// Moves to next mode
+        /// </summary>
         public void SelectNextMode() { }
 
+        /// <summary>
+        /// Moves to previous mode
+        /// </summary>
         public void SelectPreviousMode() { }
     }
 }

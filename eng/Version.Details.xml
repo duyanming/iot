@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Dependencies>
-  <ProductDependencies>
-    <Dependency Name="System.Device.Gpio" Version="0.1.0-prerelease.19324.3">
-      <Uri>https://github.com/dotnet/iot</Uri>
-      <Sha>bd46eacd1e304a3c42d54e574396cf2bdbdbd539</Sha>
-    </Dependency>
-    <Dependency Name="Iot.Device.Bindings" Version="0.1.0-prerelease.19324.3">
-      <Uri>https://github.com/dotnet/iot</Uri>
-      <Sha>bd46eacd1e304a3c42d54e574396cf2bdbdbd539</Sha>
-    </Dependency>
-  </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="1.0.0-beta.19323.4">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="5.0.0-beta.19564.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>9946534da4f73e6242ca105f6798ab58119c9ab0</Sha>
+      <Sha>44214d4d7d9091e31f57c5e6bc51180cbb0f79bf</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="2.0.0-beta.19323.4">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="5.0.0-beta.19564.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>9946534da4f73e6242ca105f6798ab58119c9ab0</Sha>
+      <Sha>44214d4d7d9091e31f57c5e6bc51180cbb0f79bf</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.DotNet.GenAPI" Version="1.0.0-beta.19323.4">
+    <Dependency Name="Microsoft.DotNet.GenAPI" Version="5.0.0-beta.19564.2">
       <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>9946534da4f73e6242ca105f6798ab58119c9ab0</Sha>
+      <Sha>44214d4d7d9091e31f57c5e6bc51180cbb0f79bf</Sha>
     </Dependency>
   </ToolsetDependencies>
+  <!-- ProductDependencies -->
+  <ProductDependencies>
+    <Dependency Name="System.Drawing.Common" Version="4.6.0">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>4ac4c0367003fe3973a3648eb0715ddb0e3bbcea</Sha>
+    </Dependency>
+    <Dependency Name="System.IO.Ports" Version="4.6.0">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>4ac4c0367003fe3973a3648eb0715ddb0e3bbcea</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.Win32.Registry" Version="4.6.0">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>4ac4c0367003fe3973a3648eb0715ddb0e3bbcea</Sha>
+    </Dependency>
+    <Dependency Name="System.Runtime.WindowsRuntime" Version="4.6.0">
+      <Uri>https://github.com/dotnet/corefx</Uri>
+      <Sha>4ac4c0367003fe3973a3648eb0715ddb0e3bbcea</Sha>
+    </Dependency>
+  </ProductDependencies>
 </Dependencies>

@@ -33,12 +33,14 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize an EV3 Color Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         public EV3ColorSensor(Brick brick, SensorPort port) : this(brick, port, ColorSensorMode.Color, 1000) { }
 
         /// <summary>
         /// Initialize an EV3 Color Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Color mode</param>
         public EV3ColorSensor(Brick brick, SensorPort port, ColorSensorMode mode) : this(brick, port, mode, 1000) { }
@@ -46,6 +48,7 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initilaize an EV3 Color Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Color mode</param>
         /// <param name="timeout">Period in millisecond to check sensor value changes</param>
@@ -398,28 +401,49 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Sensor port
+        /// </summary>
         public SensorPort Port { get; }
 
+        /// <summary>
+        /// Gets sensor name
+        /// </summary>
+        /// <returns>Sensor name</returns>
         public string GetSensorName()
         {
             return "EV3 Color Sensor";
         }
 
+        /// <summary>
+        /// Moves to next mode
+        /// </summary>
         public void SelectNextMode()
         {
             ColorMode = ColorMode.Next();
         }
 
+        /// <summary>
+        /// Moves to previous mode
+        /// </summary>
         public void SelectPreviousMode()
         {
             ColorMode = ColorMode.Previous();
         }
 
+        /// <summary>
+        /// Number of modes
+        /// </summary>
+        /// <returns>Number of modes</returns>
         public int NumberOfModes()
         {
             return Enum.GetNames(typeof(ColorSensorMode)).Length;
         }
 
+        /// <summary>
+        /// Selected mode
+        /// </summary>
+        /// <returns>String representing selected mode</returns>
         public string SelectedMode()
         {
             return ColorMode.ToString();

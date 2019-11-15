@@ -9,6 +9,9 @@ using System.Threading;
 
 namespace Iot.Device.GoPiGo3.Movements
 {
+    /// <summary>
+    /// Represents GoPiGo3 vehicle
+    /// </summary>
     public class Vehicle
     {
         private GoPiGo _goPiGo = null;
@@ -100,7 +103,7 @@ namespace Iot.Device.GoPiGo3.Movements
         /// Run backward for the specified number of milliseconds
         /// </summary>
         /// <param name="speed">speed is between -255 and +255</param>
-        /// <param name="timeout">>number of milliseconds to run the motors</param>
+        /// <param name="timeout">number of milliseconds to run the motors</param>
         public void Backward(int speed, int timeout)
         {
             RunMotorSyncTime(new MotorPort[2] { PortLeft, PortRight }, new int[2] { speed * _correctedDir, speed * _correctedDir }, timeout);
@@ -110,7 +113,7 @@ namespace Iot.Device.GoPiGo3.Movements
         /// Run forward for the specified number of milliseconds
         /// </summary>
         /// <param name="speed">speed is between -255 and +255</param>
-        /// <param name="timeout">>number of milliseconds to run the motors</param>
+        /// <param name="timeout">number of milliseconds to run the motors</param>
         public void Forward(int speed, int timeout)
         {
             Backward(-speed, timeout);

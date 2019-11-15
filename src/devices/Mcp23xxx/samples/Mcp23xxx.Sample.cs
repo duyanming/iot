@@ -5,9 +5,7 @@
 using System;
 using System.Device.Gpio;
 using System.Device.I2c;
-using System.Device.I2c.Drivers;
 using System.Device.Spi;
-using System.Device.Spi.Drivers;
 using System.Threading;
 
 namespace Iot.Device.Mcp23xxx.Samples
@@ -22,7 +20,7 @@ namespace Iot.Device.Mcp23xxx.Samples
 
             using (Mcp23xxx mcp23xxx = GetMcp23xxxDevice(Mcp23xxxDevice.Mcp23017))
             {
-
+                GpioController controllerUsingMcp = new GpioController(PinNumberingScheme.Logical, mcp23xxx);
                 // Samples are currently written specifically for the 16 bit variant
                 if (mcp23xxx is Mcp23x1x mcp23x1x)
                 {
@@ -30,10 +28,10 @@ namespace Iot.Device.Mcp23xxx.Samples
                     ReadSwitchesWriteLeds(mcp23x1x);
                     //WriteByte(mcp23x1x);
                     //WriteUshort(mcp23x1x);
-                    //WriteBits(mcp23x1x);
+                    //WriteBits(mcp23x1x, controllerUsingMcp);
                 }
 
-                //ReadBits(mcp23xxx);
+                //ReadBits(controllerUsingMcp);
             }
         }
 
@@ -54,7 +52,7 @@ namespace Iot.Device.Mcp23xxx.Samples
         private static Mcp23xxx GetMcp23xxxDevice(Mcp23xxxDevice mcp23xxxDevice)
         {
             var i2cConnectionSettings = new I2cConnectionSettings(1, s_deviceAddress);
-            var i2cDevice = new UnixI2cDevice(i2cConnectionSettings);
+            var i2cDevice = I2cDevice.Create(i2cConnectionSettings);
 
             // I2C.
             switch (mcp23xxxDevice)
@@ -75,7 +73,7 @@ namespace Iot.Device.Mcp23xxx.Samples
                 Mode = SpiMode.Mode0
             };
 
-            var spiDevice = new UnixSpiDevice(spiConnectionSettings);
+            var spiDevice = SpiDevice.Create(spiConnectionSettings);
 
             // SPI.
             switch (mcp23xxxDevice)
@@ -167,19 +165,19 @@ namespace Iot.Device.Mcp23xxx.Samples
         }
 
         // This is now Read(pinNumber)
-        private static void ReadBits(Mcp23xxx mcp23xxx)
+        private static void ReadBits(GpioController controller)
         {
             Console.WriteLine("Read Bits");
 
             for (int bitNumber = 0; bitNumber < 8; bitNumber++)
             {
-                PinValue bit = mcp23xxx.Read(bitNumber);
+                PinValue bit = controller.Read(bitNumber);
                 Console.WriteLine($"{bitNumber}: {bit}");
             }
         }
 
         // This is now Write(pinNumber)
-        private static void WriteBits(Mcp23x1x mcp23x1x)
+        private static void WriteBits(Mcp23x1x mcp23x1x, GpioController controller)
         {
             Console.WriteLine("Write Bits");
 
@@ -190,10 +188,10 @@ namespace Iot.Device.Mcp23xxx.Samples
 
             for (int bitNumber = 9; bitNumber < 16; bitNumber++)
             {
-                mcp23x1x.Write(bitNumber, PinValue.Low);
+                controller.Write(bitNumber, PinValue.Low);
                 Console.WriteLine($"Bit {bitNumber} low");
                 Thread.Sleep(500);
-                mcp23x1x.Write(bitNumber, PinValue.High);
+                controller.Write(bitNumber, PinValue.High);
                 Console.WriteLine($"Bit {bitNumber} high");
                 Thread.Sleep(500);
             }

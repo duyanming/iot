@@ -7,6 +7,9 @@ using System.Device.Gpio;
 
 namespace Iot.Device.GrovePiDevice.Sensors
 {
+    /// <summary>
+    /// Relay module
+    /// </summary>
     public class Relay : DigitalOutput
     {
         /// <summary>
@@ -20,7 +23,7 @@ namespace Iot.Device.GrovePiDevice.Sensors
         /// <summary>
         /// Relay constructor
         /// </summary>
-        /// <param name="goPiGo">The GrovePi class</param>
+        /// <param name="grovePi">The GrovePi class</param>
         /// <param name="port">The grove Port, need to be in the list of SupportedPorts</param>
         /// <param name="inverted">If inverted, the relay is on when output is low and off when output is high</param>
         public Relay(GrovePi grovePi, GrovePort port, bool inverted) : base(grovePi, port)
@@ -49,6 +52,9 @@ namespace Iot.Device.GrovePiDevice.Sensors
             Value = PinValue.High;
         }
 
+        /// <summary>
+        /// If inverted, the relay is on when output is low and off when output is high
+        /// </summary>
         public bool IsInverted { get; internal set; }
 
         /// <summary>

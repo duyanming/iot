@@ -26,12 +26,14 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize an EV3 Ulrasonic sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         public EV3UltraSonicSensor(Brick brick, SensorPort port) : this(brick, port, UltraSonicMode.Centimeter, 1000) { }
 
         /// <summary>
         /// Initialize an EV3 Ultrasonic sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor mode</param>
         /// <param name="usmode">Ultrasonic mode</param>
         public EV3UltraSonicSensor(Brick brick, SensorPort port, UltraSonicMode usmode) : this(brick, port, usmode, 1000) { }
@@ -39,6 +41,7 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize an EV3 Ultrasonic Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="usmode">Ultrasonic mode</param>
         /// <param name="timeout">Period in millisecond to check sensor value changes</param>
@@ -154,6 +157,9 @@ namespace Iot.Device.BrickPi3.Sensors
             return (SensorType)usmode;
         }
 
+        /// <summary>
+        /// Sensor port
+        /// </summary>
         public SensorPort Port { get; }
 
         /// <summary>
@@ -215,26 +221,44 @@ namespace Iot.Device.BrickPi3.Sensors
             return int.MaxValue;
         }
 
+        /// <summary>
+        /// Gets sensor name
+        /// </summary>
+        /// <returns>Sensor name</returns>
         public string GetSensorName()
         {
             return "EV3 Ultrasonic";
         }
 
+        /// <summary>
+        /// Moves to next mode
+        /// </summary>
         public void SelectNextMode()
         {
             Mode = Mode.Next();
         }
 
+        /// <summary>
+        /// Moves to previous mode
+        /// </summary>
         public void SelectPreviousMode()
         {
             Mode = Mode.Previous();
         }
 
+        /// <summary>
+        /// Number of modes
+        /// </summary>
+        /// <returns>Number of modes</returns>
         public int NumberOfModes()
         {
             return Enum.GetNames(typeof(UltraSonicMode)).Length;
         }
 
+        /// <summary>
+        /// Selected mode
+        /// </summary>
+        /// <returns>String representing selected mode</returns>
         public string SelectedMode()
         {
             return Mode.ToString();

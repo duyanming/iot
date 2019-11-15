@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,20 +6,31 @@
 // Formulas and code examples can also be found in the datasheet https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf
 
 using System;
-using System.Device.I2c;
 using System.Buffers.Binary;
+using System.Device.I2c;
 using System.Threading;
 using Iot.Units;
 
 namespace Iot.Device.Bmp180
 {
+    /// <summary>
+    /// BMP180 - barometer, altitude and temperature sensor
+    /// </summary>
     public class Bmp180 : IDisposable
     {
         private I2cDevice _i2cDevice;        
         private readonly CalibrationData _calibrationData;
         private Sampling _mode;
+
+        /// <summary>
+        /// Default I2C address
+        /// </summary>
         public const byte DefaultI2cAddress = 0x77;
 
+        /// <summary>
+        /// Constructs Bmp180 instance
+        /// </summary>
+        /// <param name="i2cDevice">I2C device used to communicate with the device</param>
         public Bmp180(I2cDevice i2cDevice)
         {
             _i2cDevice = i2cDevice;            
@@ -53,9 +64,9 @@ namespace Iot.Device.Bmp180
         ///  Reads the pressure from the sensor
         /// </summary>
         /// <returns>
-        ///  Atmospheric pressure in Pa
+        ///  Atmospheric pressure
         /// </returns>
-        public double ReadPressure()
+        public Pressure ReadPressure()
         {
             // Pressure Calculations
             int B6 = CalculateTrueTemperature() - 4000;
@@ -70,21 +81,32 @@ namespace Iot.Device.Bmp180
             int p = (B7 < 0x80000000) ? (int)((B7 * 2) / B4) : (int)((B7 / B4) * 2);
             X1 = (((p * p) / 65536 ) * 3038) / 65536;
             
-            return p + ( ((((p * p) / 65536 ) * 3038) / 65536) + ((-7357 * p) / 65536) + 3791) / 8;
+            return Pressure.FromPascal(p + ( ((((p * p) / 65536 ) * 3038) / 65536) + ((-7357 * p) / 65536) + 3791) / 8);
         }
 
         /// <summary>
-        ///  Calculates the altitude in meters from the specified sea-level pressure(in hPa).
+        ///  Calculates the altitude in meters from the specified sea-level pressure.
         /// </summary>
         /// <param name="seaLevelPressure"> 
-        ///  Sea-level pressure in hPa
+        ///  Sea-level pressure
         /// </param>
         /// <returns>
         ///  Height in meters from the sensor
         /// </returns>
-        public double ReadAltitude(double seaLevelPressure = 101325.0)
+        public double ReadAltitude(Pressure seaLevelPressure)
         {
-            return 44330.0 * (1.0 - Math.Pow(((double)ReadPressure() / seaLevelPressure), (1.0 / 5.255)));
+            return 44330.0 * (1.0 - Math.Pow((ReadPressure().Pascal / seaLevelPressure.Pascal), (1.0 / 5.255)));
+        }
+        
+        /// <summary>
+        ///  Calculates the altitude in meters from the mean sea-level pressure.
+        /// </summary>
+        /// <returns>
+        ///  Height in meters from the sensor
+        /// </returns>
+        public double ReadAltitude()
+        {
+            return ReadAltitude(Pressure.MeanSeaLevel);
         }
 
         /// <summary>
@@ -94,11 +116,11 @@ namespace Iot.Device.Bmp180
         ///  altitude in meters
         /// </param>
         /// <returns>
-        ///  Pressure in Pascals
+        ///  Pressure
         /// </returns>
-        public double ReadSeaLevelPressure(double altitude = 0.0)
+        public Pressure ReadSeaLevelPressure(double altitude = 0.0)
         {
-            return (double)ReadPressure() / Math.Pow((1.0 - (altitude / 44333.0)), 5.255);
+            return Pressure.FromPascal(ReadPressure().Pascal / Math.Pow((1.0 - (altitude / 44333.0)), 5.255));
         }
 
         /// <summary>
@@ -226,7 +248,8 @@ namespace Iot.Device.Bmp180
 
             return BinaryPrimitives.ReadUInt16BigEndian(bytes);            
         }
-        
+
+        /// <inheritdoc/>
         public void Dispose()
         {
             _i2cDevice?.Dispose();

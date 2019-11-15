@@ -3,16 +3,16 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.IO;
-using System.Device.Gpio;
+using System.Buffers.Binary;
 using System.Device.I2c;
 using System.Diagnostics;
-using System.Device.I2c.Drivers;
-using System.Buffers.Binary;
 using Iot.Units;
 
 namespace Iot.Device.Lps25h
 {
+    /// <summary>
+    /// LPS25H - Piezoresistive pressure and thermometer sensor
+    /// </summary>
     public class Lps25h : IDisposable
     {
         private const byte ReadMask = 0x80;
@@ -50,9 +50,9 @@ namespace Iot.Device.Lps25h
         public Temperature Temperature => Temperature.FromCelsius(42.5f + ReadInt16(Register.Temperature) / 480f);
 
         /// <summary>
-        /// Pressure in hPa
+        /// Pressure
         /// </summary>
-        public float Pressure => ReadInt24(Register.Pressure) / 4096f;
+        public Pressure Pressure => Pressure.FromHectopascal(ReadInt24(Register.Pressure) / 4096.0);
 
         private void WriteByte(Register register, byte data)
         {
@@ -107,6 +107,7 @@ namespace Iot.Device.Lps25h
             return _i2c.ReadByte();
         }
 
+        /// <inheritdoc/>
         public void Dispose()
         {
             _i2c?.Dispose();

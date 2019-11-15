@@ -44,12 +44,14 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize an EV3 Gyro Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         public EV3GyroSensor(Brick brick, SensorPort port) : this(brick, port, GyroMode.Angle) { }
 
         /// <summary>
         /// Initialize an EV3 Gyro Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Gyro mode</param>
         public EV3GyroSensor(Brick brick, SensorPort port, GyroMode mode) : this(brick, port, mode, 1000) { }
@@ -57,6 +59,7 @@ namespace Iot.Device.BrickPi3.Sensors
         /// <summary>
         /// Initialize an EV3 Gyro Sensor
         /// </summary>
+        /// <param name="brick"></param>
         /// <param name="port">Sensor port</param>
         /// <param name="mode">Gyro mode</param>
         /// <param name="timeout">Period in millisecond to check sensor value changes</param>
@@ -161,6 +164,9 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Sensor port
+        /// </summary>
         public SensorPort Port { get; }
 
         /// <summary>
@@ -242,26 +248,44 @@ namespace Iot.Device.BrickPi3.Sensors
             }
         }
 
+        /// <summary>
+        /// Gets sensor name
+        /// </summary>
+        /// <returns>Sensor name</returns>
         public string GetSensorName()
         {
             return "EV3 Gyro";
         }
 
+        /// <summary>
+        /// Moves to next mode
+        /// </summary>
         public void SelectNextMode()
         {
             Mode = Mode.Next();
         }
 
+        /// <summary>
+        /// Moves to previous mode
+        /// </summary>
         public void SelectPreviousMode()
         {
             Mode = Mode.Previous();
         }
 
+        /// <summary>
+        /// Number of modes
+        /// </summary>
+        /// <returns>Number of modes</returns>
         public int NumberOfModes()
         {
             return Enum.GetNames(typeof(GyroMode)).Length;
         }
 
+        /// <summary>
+        /// Selected mode
+        /// </summary>
+        /// <returns>String representing selected mode</returns>
         public string SelectedMode()
         {
             return Mode.ToString();
